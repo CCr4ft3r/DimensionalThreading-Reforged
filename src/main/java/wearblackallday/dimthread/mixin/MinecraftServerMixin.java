@@ -39,7 +39,7 @@ public abstract class MinecraftServerMixin {
      * @see MinecraftServerMixin#tickWorlds(BooleanSupplier, CallbackInfo)
      */
     @Redirect(method = "tickChildren", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/server/MinecraftServer;getWorldArray()[Lnet/minecraft/server/level/ServerLevel;"))
+        target = "Lnet/minecraft/server/MinecraftServer;getWorldArray()[Lnet/minecraft/server/level/ServerLevel;", remap = false))
     public ServerLevel[] tickWorlds(MinecraftServer instance) {
         return DimThread.MANAGER.isActive((MinecraftServer) (Object) this) ? new ServerLevel[]{} : getWorldArray();
     }
@@ -49,7 +49,7 @@ public abstract class MinecraftServerMixin {
      * they are all complete.
      */
     @Inject(method = "tickChildren", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/server/MinecraftServer;getWorldArray()[Lnet/minecraft/server/level/ServerLevel;"))
+        target = "Lnet/minecraft/server/MinecraftServer;getWorldArray()[Lnet/minecraft/server/level/ServerLevel;", remap = false))
     public void tickWorlds(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
         if (!DimThread.MANAGER.isActive((MinecraftServer) (Object) this)) return;
 
