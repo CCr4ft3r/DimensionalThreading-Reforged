@@ -175,6 +175,10 @@ dependencies {
 
 // Example for how to get properties into the manifest for reading at runtime.
 jar {
+    from('./') {
+        include 'README.md'
+        include 'LICENSE'
+    }
     manifest {
         attributes([
                 "Specification-Title"     : "Dimensional Threading Reforged",
