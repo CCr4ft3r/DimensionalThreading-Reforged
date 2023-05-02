@@ -85,13 +85,13 @@ public abstract class MinecraftServerMixin {
             }
 
             DimThread.swapThreadsAndRun(() -> {
-                net.minecraftforge.event.ForgeEventFactory.onPreLevelTick(serverWorld, shouldKeepTicking);
+                net.minecraftforge.event.ForgeEventFactory.onPreWorldTick(serverWorld, shouldKeepTicking);
                 try {
                     serverWorld.tick(shouldKeepTicking);
                 } catch (Throwable throwable) {
                     crash.set(new CrashInfo(serverWorld, throwable));
                 }
-                net.minecraftforge.event.ForgeEventFactory.onPostLevelTick(serverWorld, shouldKeepTicking);
+                net.minecraftforge.event.ForgeEventFactory.onPostWorldTick(serverWorld, shouldKeepTicking);
             }, serverWorld, serverWorld.getChunkSource());
         });
 
