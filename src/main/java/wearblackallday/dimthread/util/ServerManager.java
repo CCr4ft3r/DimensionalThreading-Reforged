@@ -17,6 +17,8 @@
  */
 package wearblackallday.dimthread.util;
 
+import it.unimi.dsi.fastutil.objects.Object2BooleanArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.GameRules;
 import wearblackallday.dimthread.init.ModGameRules;
@@ -25,12 +27,11 @@ import wearblackallday.util.ThreadPool;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 public class ServerManager {
 
-	private final Map<MinecraftServer, Boolean> actives = Collections.synchronizedMap(new WeakHashMap<>());
-	public final Map<MinecraftServer, ThreadPool> threadPools = Collections.synchronizedMap(new WeakHashMap<>());
+	private final Map<MinecraftServer, Boolean> actives = Collections.synchronizedMap(new Object2BooleanArrayMap<>());
+	public final Map<MinecraftServer, ThreadPool> threadPools = Collections.synchronizedMap(new Object2ObjectArrayMap<>());
 
 	public boolean isActive(MinecraftServer server) {
 		return this.actives.computeIfAbsent(server, s -> s.getGameRules().getBoolean(ModGameRules.ACTIVE.getKey()));
@@ -45,9 +46,9 @@ public class ServerManager {
 	}
 
 	public void setThreadCount(MinecraftServer server, GameRules.IntegerValue value) {
-		ThreadPool current = this.threadPools.get(server);
+		ThreadPool current = getThreadPool(server);
 
-		if(current.getActiveCount() != 0) {
+		if (current.getActiveCount() != 0) {
 			throw new ConcurrentModificationException("Setting the thread count in wrong phase");
 		}
 
