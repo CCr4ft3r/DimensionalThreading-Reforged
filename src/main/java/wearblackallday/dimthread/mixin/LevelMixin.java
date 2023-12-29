@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.*;
 import wearblackallday.dimthread.thread.IMutableMainThread;
 
 @Mixin(Level.class)
-public abstract class WorldMixin implements IMutableMainThread {
+public abstract class LevelMixin implements IMutableMainThread {
 
 	@Shadow @Final @Mutable private Thread thread;
 

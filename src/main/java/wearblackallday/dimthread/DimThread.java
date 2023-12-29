@@ -29,7 +29,7 @@ import wearblackallday.util.ThreadPool;
 @Mod(DimThread.MOD_ID)
 public class DimThread {
 
-    public static final String MOD_ID = "dimthread";
+    public static final String MOD_ID = "waterthreads_dimensions";
     public static final ServerManager MANAGER = new ServerManager();
 
     public DimThread() {
